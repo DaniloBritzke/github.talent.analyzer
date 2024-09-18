@@ -1,0 +1,17 @@
+{
+  "entryFile": "src/App.ts",
+  "controllerPathGlobs": [
+    "src/controllers/http/**/*Controller.ts"
+  ],
+  "spec": {
+    "outputDirectory": "src/controllers/http/generated/spec/",
+    "specVersion": 3
+  },
+  "routes": {
+    "middleware": "express",
+    "routesDir": "src/controllers/http/generated/"
+  },
+  "compilerOptions": {
+    "baseUrl": "./"
+  }
+}

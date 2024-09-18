@@ -1,0 +1,6 @@
+{
+  "exec": "babel-node src/index.ts",
+  "ignore": [ "config.yaml" ],
+  "ext": "ts,json,js",
+  "watch": [ "src" ]
+}

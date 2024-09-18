@@ -1,0 +1,19 @@
+## ---- DATABASE ----
+# 'mysql'| 'postgres'| 'mssql'
+DB_DIALECT: mysql
+DB_DATABASE_NAME: sismart_sl1
+DB_HOST: 127.0.0.1
+DB_PORT: 3307
+DB_USERNAME: root
+DB_PASSWORD: admin
+DB_LOGGING: false
+
+## ---- LOGS ----
+# 'verbose' | 'info' | 'warn' | 'error'
+LOG_LEVEL: "verbose"
+LOG_API_ERROR: false
+
+## ---- SERVER ----
+SERVER_PORT: 5004
+USERNAME: admin
+PASSWORD: admin

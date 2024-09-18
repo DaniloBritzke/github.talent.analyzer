@@ -1,0 +1,6 @@
+{
+  "watch": [ "src/api/controllers/http" ],
+  "ext": "ts,json",
+  "ignore": [ "src/api/controllers/http/generated/**/*" ],
+  "exec": "tsoa spec-and-routes"
+}
