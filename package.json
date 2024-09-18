@@ -1,0 +1,35 @@
+{
+  "name": "github.talent.analizer",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "backend": "npm -w backend run start",
+    "frontend": "npm -w frontend run start"
+  },
+  "keywords": [ ],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "backend",
+    "core"
+  ],
+  "dependencies": {
+    "delay": "^6.0.0",
+    "rxjs": "^7.8.1"
+  },
+  "bin": "build/backend/index.js",
+  "pkg": {
+    "scripts": [
+      "build/backend/*.js"
+    ],
+    "assets": [
+      "node_modules/swagger-ui-dist/**/*"
+    ]
+  },
+  "devDependencies": {
+    "git-describe": "^4.1.1",
+    "shx": "^0.3.4",
+    "yazl": "^2.5.1"
+  }
+}
