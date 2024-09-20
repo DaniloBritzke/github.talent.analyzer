@@ -1,9 +1,11 @@
 {
   "name": "github.talent.analizer",
   "version": "1.0.1",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint . --fix",
     "backend": "npm -w backend run start",
     "frontend": "npm -w frontend run start"
   },
@@ -28,6 +30,10 @@
     ]
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-plugin-react": "^7.28.0",
     "git-describe": "^4.1.1",
     "shx": "^0.3.4",
     "yazl": "^2.5.1"
