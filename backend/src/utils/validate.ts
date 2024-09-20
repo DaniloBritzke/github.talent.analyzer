@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi from 'joi'
 
 /**
  * Validate and parse data with schema,
@@ -6,13 +6,13 @@ import Joi from 'joi';
  */
 export const validate = <T>(schema: Joi.ObjectSchema<T>, data: T | any): T => {
     const { error, value } = schema.validate(
-            data, 
-            {
-                abortEarly: true,
-                convert: true,
-                stripUnknown: true,
-            }
-        )
+        data, 
+        {
+            abortEarly: true,
+            convert: true,
+            stripUnknown: true,
+        },
+    )
     if(error) {
         throw error
     }
