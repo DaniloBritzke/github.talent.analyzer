@@ -6,9 +6,9 @@ export interface IGetProfileDetailsParams {
   userName: string;
 }
 
-
 export interface IGetProfileDetailsResponse {
   id: number;
+  login: string;
   name: string;
   company?: string;
   blog?: string;
@@ -45,19 +45,11 @@ export interface IRepositoryContributor {
 }
 
 export interface ICommitActivity {
-  total: number; 
+  total: number;
   week: number;
   days: number[];
 }
 
 export interface IRepositoryLanguagesResponse {
-  [language: string]: number; 
-}
-
-export abstract class IClientGitHub {
-  abstract init(): Promise<void>;
-  abstract getProfileDetails(params: IGetProfileDetailsParams): Promise<IGetProfileDetailsResponse>;
-  abstract getUserRepositories(userName: string): Promise<IUserRepository[]>;
-  abstract getRepositoryLanguages(owner: string, repo: string): Promise<IRepositoryLanguagesResponse>;
-  abstract getRepositoryContributors(owner: string, repo: string): Promise<IRepositoryContributor[]>;
+  [language: string]: number;
 }
