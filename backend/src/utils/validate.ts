@@ -6,17 +6,17 @@ import Joi from 'joi'
  */
 export const validate = <T>(schema: Joi.ObjectSchema<T>, data: T | any): T => {
     const { error, value } = schema.validate(
-        data, 
+        data,
         {
             abortEarly: true,
             convert: true,
             stripUnknown: true,
         },
     )
-    if(error) {
+    if (error) {
         throw error
     }
-    if(!value) {
+    if (!value) {
         throw new Joi.ValidationError('got empty value', [], data)
     }
     return value

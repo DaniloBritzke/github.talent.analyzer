@@ -1,12 +1,11 @@
-import { Controller, Get, Route } from '@tsoa/runtime';
+import { Controller, Get, Route } from '@tsoa/runtime'
 
-
-@Route('/api/v1/health')
+@Route('/api/health')
 export class HealthController extends Controller {
   @Get()
-  get() {
-    return {
-      status: 'ok'
+    get() {
+        return {
+            status: 'ok',
+        }
     }
-  }
 }
