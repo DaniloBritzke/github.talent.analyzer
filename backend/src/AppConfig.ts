@@ -6,14 +6,7 @@ import { validate } from './utils/validate'
 export interface IAppConfig {
   readonly LOG_LEVEL: 'silly' | 'verbose' | 'info' | 'warn' | 'error';
   readonly SERVER_PORT: number;
-  readonly DB_DATABASE_NAME: string;
-  readonly DB_HOST: string;
-  readonly DB_PORT: number;
-  readonly DB_USERNAME: string;
-  readonly DB_PASSWORD: string
-  readonly DB_DIALECT: 'mysql' | 'postgres' | 'mssql';
-  readonly USERNAME: string
-  readonly PASSWORD: string
+  readonly DB_DATABASE_URL: string;
   readonly GITHUB_KEY: string
   readonly LOG_API_ERROR: boolean;
 }
@@ -27,15 +20,8 @@ export class AppConfig {
             .default('info')
             .optional(),
         SERVER_PORT: Joi.number(),
-        DB_HOST: Joi.string(),
-        DB_DIALECT: Joi.string().valid('mysql', 'postgres', 'sqlite', 'mariadb', 'mssql'),
-        DB_PORT: Joi.number().default(3306),
-        DB_USERNAME: Joi.string(),
-        DB_PASSWORD: Joi.string(),
-        DB_DATABASE_NAME: Joi.string(),
-        USERNAME: Joi.string(),
-        PASSWORD: Joi.string(),
-        GITHUB_KEY: Joi.string(),
+        DB_DATABASE_URL: Joi.string().required(),
+        GITHUB_KEY: Joi.string().required(),
         LOG_API_ERROR: Joi.boolean().default(false),
     })
 
@@ -44,7 +30,7 @@ export class AppConfig {
         if (!AppConfig.instance) {
             throw new Error('App config is not loaded.')
         }
-        return AppConfig.instance 
+        return AppConfig.instance
     }
 
     static setInstance(opt: AppConfig) {
