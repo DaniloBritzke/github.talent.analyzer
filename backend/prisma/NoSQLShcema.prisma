@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/shcemas/mongodb"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Request {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  profileUrl  String[]
+  Profile     Profile[]
+
+  @@map("requests")
+}
+
+model Profile {
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  Profile      Request?     @relation(fields: [requestId], references: [id])
+  requestId    String?      @db.ObjectId
+  name         String
+  company      String?
+  blog         String?
+  location     String?
+  email        String?
+  bio          String?
+  followers    Int?
+  following    Int?
+  repositories Repository[]
+
+  @@map("profiles")
+}
+
+model Repository {
+  id              String     @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  fullName        String
+  private         Boolean
+  url             String
+  description     String?
+  fork            Boolean
+  createdAt       String
+  updatedAt       String
+  pushedAt        String
+  stargazersCount Int
+  watchersCount   Int
+  forksCount      Int
+  language        String?
+  languages       Language[]
+  commitActivity  Json?
+  Profile         Profile?   @relation(fields: [profileId], references: [id])
+  profileId       String?    @db.ObjectId
+
+  @@map("repositories")
+}
+
+model Language {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  language     String
+  value        Int
+  Repository   Repository? @relation(fields: [repositoryId], references: [id])
+  repositoryId String?     @db.ObjectId
+}
+
+model Task {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  url       String
+  done      Boolean? @default(false)
+  error     IError?
+  timestamp Int
+
+  @@map("tasks")
+}
+
+type IActivity {
+  commit ICommitActivity[]
+}
+
+type ICommitActivity {
+  total Int
+  week  Int
+  days  Int[]
+}
+
+type IError {
+  message String
+  code    Int
+}
