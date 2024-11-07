@@ -7,14 +7,15 @@
   "scripts": {
     "lint": "eslint . --fix",
     "backend": "npm -w backend run start",
-    "frontend": "npm -w frontend run start"
+    "frontend": "npm -w frontend run dev"
   },
   "keywords": [ ],
   "author": "",
   "license": "ISC",
   "workspaces": [
     "backend",
-    "core"
+    "core",
+    "frontend"
   ],
   "dependencies": {
     "delay": "^6.0.0",
