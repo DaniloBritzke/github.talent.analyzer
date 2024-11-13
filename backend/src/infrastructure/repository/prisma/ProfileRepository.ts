@@ -4,8 +4,40 @@ import { IProfileRepository } from '../interfaces'
 import database from '@/db'
 
 export class ProfileRepository implements IProfileRepository {
-    async list({ ids, name, requestId }: IProfileListOptions): Promise<IProfile[]> {
-        const where: Prisma.ProfileWhereInput = {}
+    async list({ ids, name, requestId, language }: IProfileListOptions): Promise<IProfile[]> {
+        const whereLng: { language?: { contains: string; mode: 'insensitive' } } = {}
+
+        if (language) {
+            whereLng.language = { contains: language, mode: 'insensitive' }
+        }
+
+        const repositories = language
+            ? await database.prismaClient.repository.findMany({
+                where: {
+                    languages: {
+                        some: whereLng,
+                    },
+                },
+                select: { id: true },
+            })
+            : []
+
+        const repositoryIds = repositories.map(repo => repo.id)
+
+        if (repositoryIds.length === 0 && language) {
+            return []
+        }
+
+        const where: Prisma.ProfileWhereInput = {
+            repositories: repositoryIds.length
+                ? {
+                    some: {
+                        id: { in: repositoryIds },
+                    },
+                }
+                : undefined,
+        }
+
         if (ids) {
             where.id = { in: ids }
         }
@@ -17,10 +49,9 @@ export class ProfileRepository implements IProfileRepository {
         if (requestId) {
             where.requestId = requestId
         }
+
         const list = await database.prismaClient.profile.findMany({ where })
-        if (!list.length) {
-            return []
-        }
+
         return list
     }
 

@@ -36,10 +36,12 @@ export class TaskQueue {
         const job = await this.queue.getNext()
         try {
             if (job) {
-                log.info('TaskQueue:', ` Process Taks: ${job.id}`)
+                const startAt = Date.now()
+                log.info('TaskQueue:', ` Process Task: ${job.id}`)
                 await this.processTask(job)
+                log.info('TaskQueue:', ` Done Task: ${job.id} in ${(Date.now() - startAt) / 1000}s`)
+                setImmediate(this._worker.bind(this))
             }
-            log.info('TaskQueue:', ' not have pending jobs')
         } catch (e) {
             log.error('TaskQueue:', e.message, e)
             await this.queue.onDone({ ...job, done: true, error: { message: e.message, code: 400 } })

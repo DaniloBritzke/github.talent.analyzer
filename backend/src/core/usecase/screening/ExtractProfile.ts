@@ -31,18 +31,17 @@ export class ExtractProfile {
         const getLanguagesUseCase = new GetProfileLanguages(this.client)
         const getContributorsUseCase = new GetContributors(this.client)
 
-        const repositoriesWithDetails = await Promise.all(
-            profileRepositories.map(async (repository) => {
-                const repositoryName = repository.name
-                const languages = await getLanguagesUseCase.execute({ userName, repositoryName })
-                const contributors = await getContributorsUseCase.execute({ userName, repositoryName })
+        const repositoriesWithDetails = []
+        for (const repository of profileRepositories) {
+            const repositoryName = repository.name
+            const languages = await getLanguagesUseCase.execute({ userName, repositoryName })
+            // const contributors = await getContributorsUseCase.execute({ userName, repositoryName });
 
-                return {
-                    ...repository,
-                    languages,
-                }
-            }),
-        )
+            repositoriesWithDetails.push({
+                ...repository,
+                languages,
+            })
+        }
 
         await new StoreProfile(this.profileRepository, this.repositoriesRepository).execute({
             requestId: valid.requestId,
@@ -52,7 +51,7 @@ export class ExtractProfile {
     }
 
     private extractUsernameFromUrl(githubUrl: string): string {
-        const regex = /github\.com\/([a-zA-Z0-9-]+)/
+        const regex = /github\.com\/(?:users\/)?([a-zA-Z0-9-]+)/
         const match = githubUrl.match(regex)
         if (!match || !match[1]) {
             throw new Error('Invalid GitHub URL')

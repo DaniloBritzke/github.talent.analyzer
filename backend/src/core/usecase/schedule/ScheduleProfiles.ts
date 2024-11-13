@@ -1,12 +1,7 @@
 import { IQueueRepository, IRequestRepository } from '@/infrastructure'
+import { IScheduleProfilesData } from '@github.talent.analizer/core'
 import { validate } from '@/utils/validate'
 import Joi from 'joi'
-
-export interface IScheduleProfilesData {
-  profileUrl: string[],
-  name: string;
-  description: string
-}
 
 export class ScheduleProfiles {
     constructor(

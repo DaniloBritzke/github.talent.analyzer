@@ -11,6 +11,14 @@ export interface ILanguage extends ILanguageCreate {
   id: string
 }
 
+export interface IListRepositoriesOptions {
+  profileId: string;
+}
+export interface IListLanguagesOptions {
+  language?: string;
+}
+export type IListLanguagesResult = Array<string>
+
 export interface IRepositoryCreate {
   name: string
   fullName: string

@@ -15,8 +15,8 @@ export interface IProfile extends IProfileCreate {
 }
 
 export interface IProfileListOptions {
-  ids: string[];
-  name: string;
-  requestId: string;
-
+  ids?: string[];
+  name?: string;
+  requestId?: string;
+  language?: string
 }

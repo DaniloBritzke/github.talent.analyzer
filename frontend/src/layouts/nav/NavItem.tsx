@@ -2,9 +2,9 @@ import { Box, Flex, Link, Text } from '@chakra-ui/react';
 import { FiHome, FiTrendingUp, FiCompass } from 'react-icons/fi'; 
 
 const navItems = [
-  { href: '/app', label: 'Home', icon: <FiHome /> },
-  { href: '/app/import', label: 'Importar', icon: <FiTrendingUp /> },
-  { href: '/app/profiles', label: 'Profiles', icon: <FiCompass /> },
+  { href: '/', label: 'Home', icon: <FiHome /> },
+  { href: '/import', label: 'Importar', icon: <FiTrendingUp /> },
+  { href: '/profiles', label: 'Profiles', icon: <FiCompass /> },
 ];
 
 export const NavItem = () => {

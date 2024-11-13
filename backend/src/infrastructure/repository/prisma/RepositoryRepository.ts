@@ -1,6 +1,7 @@
-import { IRepository, IRepositoryCreate } from '@github.talent.analizer/core'
+import { IListLanguagesOptions, IRepository, IRepositoryCreate } from '@github.talent.analizer/core'
 import { IRepositoryRepository } from '../interfaces'
 import database from '@/db'
+import { Prisma } from '@/generated/shcemas/mongodb'
 
 export class RepositoryRepository implements IRepositoryRepository {
     async getById(id: string): Promise<IRepository> {
@@ -34,6 +35,57 @@ export class RepositoryRepository implements IRepositoryRepository {
         }
 
         return repository
+    }
+
+    async listLanguages({ language }: IListLanguagesOptions): Promise<string[]> {
+        const where: Prisma.LanguageWhereInput = {}
+        if (language) {
+            where.language = { contains: language, mode: 'insensitive' }
+        }
+        const found = await database.prismaClient.language.findMany({
+            where,
+            select: { language: true },
+        })
+
+        if (!found.length) {
+            return []
+        }
+
+        return Array.from(new Set(found.map(item => item.language)))
+    }
+
+    async listByProfileId(profileId: string): Promise<IRepository[]> {
+        const found = await database.prismaClient.repository.findMany({ where: { profileId }, include: { languages: true } })
+        if (!found.length) {
+            return []
+        }
+
+        const result = found.map(r => ({
+            id: r.id,
+            name: r.name,
+            fullName: r.fullName,
+            private: r.private,
+            url: r.url,
+            description: r.description,
+            fork: r.fork,
+            createdAt: new Date(r.createdAt),
+            updatedAt: r.updatedAt ? new Date(r.updatedAt) : undefined,
+            pushedAt: r.pushedAt,
+            stargazersCount: r.stargazersCount,
+            watchersCount: r.watchersCount,
+            forksCount: r.forksCount,
+            language: r.language || '',
+            profileId: r.profileId || '',
+            commitActivity: [],
+            languages: r.languages?.map(lang => ({
+                id: lang.id,
+                language: lang.language,
+                value: lang.value,
+                repositoryId: lang.repositoryId,
+            })) || [],
+        }))
+
+        return result
     }
 
     async create(data: IRepositoryCreate): Promise<void> {

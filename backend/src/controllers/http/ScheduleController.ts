@@ -1,6 +1,7 @@
 import { Body, Controller, Post, Route } from '@tsoa/runtime'
-import { IScheduleProfilesData, ScheduleProfiles } from '../../core'
+import { ScheduleProfiles } from '../../core'
 import { queueRepository, requestRepository } from '../../infrastructure/container'
+import { IScheduleProfilesData } from '@github.talent.analizer/core'
 
 @Route('/api/schedule')
 export class ScheduleController extends Controller {
