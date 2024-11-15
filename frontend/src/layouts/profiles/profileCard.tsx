@@ -1,13 +1,23 @@
 import { useColorModeValue } from '@/components/ui/color-mode';
 import { Tooltip } from '@/components/ui/tooltip';
-import { Box, Text, VStack,  Badge } from '@chakra-ui/react';
+import { Box, Text, VStack,  Badge, Button } from '@chakra-ui/react';
 import { IProfile } from '@github.talent.analizer/core'
+import { useState } from 'react';
+import { RepositoryDrawer } from '../repository';
 
 interface ProfileCardProps {
   profile: IProfile;
 }
 
 export const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    console.log(isDrawerOpen)
+    setDrawerOpen((prev) => !prev);
+    console.log(isDrawerOpen)
+  };
+
   return (
     <Box
       borderWidth="1px"
@@ -34,6 +44,18 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
         <Text>Seguindo: {profile.following || 0}</Text>
         {profile.location && <Text>Location: {profile.location}</Text>}
         {/* {profile.email && <Text>Email: {profile.email}</Text>} */}
+
+        <Button colorScheme="teal" onClick={toggleDrawer}>
+          Show Repositories
+        </Button>
+
+        <RepositoryDrawer
+          isOpen={isDrawerOpen}
+          onClose={toggleDrawer}
+          profileId={profile.id}
+          profileName={profile.name}
+          key={profile.id}
+        />
       </VStack>
     </Box>
   );

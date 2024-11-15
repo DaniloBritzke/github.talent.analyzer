@@ -1,3 +1,4 @@
+import { useColorModeValue } from '@/components/ui/color-mode';
 import { useProfiles } from '@/hooks';
 import { SimpleSidebar } from '@/layouts';
 import { FilterContainer } from '@/layouts/FilterBar';
@@ -27,7 +28,7 @@ export default function Profiles() {
   const refresh = () => refetch()
 
   return (
-    <Flex flex="1" overflow="auto" height="100vh" width="100vw" direction="column">
+    <Flex flex="1" bg={useColorModeValue('white', 'gray.700')} overflow="auto" height="100vh" width="100vw" direction="column">
       <SimpleSidebar >
         <FilterContainer onReset={refresh}>
           <Flex flex="1">

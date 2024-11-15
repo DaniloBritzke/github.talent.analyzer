@@ -73,7 +73,7 @@ export function SimpleSidebar({children}: SidebarProps) {
   const { open: isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')} borderRightColor={useColorModeValue('white', 'white')} >
+    <Box minH="100vh" borderRightColor={useColorModeValue('white', 'white')} >
       <SidebarContent display={{ base: 'none', md: 'block' }} onClose={onClose} />
 
       <Drawer.Root open={isOpen} placement="top" size="full" onPointerDownOutside={onClose}>
