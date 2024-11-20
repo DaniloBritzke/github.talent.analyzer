@@ -14,8 +14,8 @@ export class ProfileRepository implements IProfileRepository {
         const repositories = language
             ? await database.prismaClient.repository.findMany({
                 where: {
-                    languages: {
-                        some: whereLng,
+                    language: {
+                        in: [language, 'Vue'], mode: 'insensitive',
                     },
                 },
                 select: { id: true },

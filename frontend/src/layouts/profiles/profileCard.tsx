@@ -46,7 +46,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({ profile }) => {
         {/* {profile.email && <Text>Email: {profile.email}</Text>} */}
 
         <Button colorScheme="teal" onClick={toggleDrawer}>
-          Show Repositories
+          Visualizar Repositórios
         </Button>
 
         <RepositoryDrawer
